@@ -9,7 +9,11 @@ import {
   useColorScheme,
   View,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
+import {Modal} from 'react-native-paper';
+// import {useNavigation} from '@react-navigation/native';
+
 //constants
 import {Height, Width} from '../constants/Dimension';
 import Colors from '../constants/colors';
@@ -17,14 +21,21 @@ import {HomePageUrl, AboutUsPageUrl, UpdatesPageUrl} from '../constants/Url';
 
 //components
 import Webview from '../components/WebView';
+import PassCodeModal from '../components/PassCodeModal';
 
 //Setting Icon
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 const TabButton = [{Title: 'Home'}, {Title: 'About Us'}, {Title: 'Updates'}];
-const MainScreen = () => {
+const MainScreen = ({navigation}) => {
+  //   const navigation = useNavigation();
   const [buttonIndex, setButtonIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(0);
+
+  //modal functions
+  const showModal = () => setModalVisible(true);
+  const hideModal = () => setModalVisible(false);
+  const containerStyle = {backgroundColor: 'white', marginHorizontal: 40};
 
   return (
     <View style={styles.container}>
@@ -35,7 +46,8 @@ const MainScreen = () => {
           size={32}
           color={Colors.WHITE}
           onPress={() => {
-            setModalVisible(true);
+            // setModalVisible(true);
+            navigation.navigate('SettingStack');
           }}
         />
 
@@ -81,6 +93,15 @@ const MainScreen = () => {
         <Webview uri={UpdatesPageUrl} />
       )}
       {/**=================</Web View>===============*/}
+      <Modal
+        visible={modalVisible}
+        onDismiss={hideModal}
+        contentContainerStyle={containerStyle}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <PassCodeModal />
+        </KeyboardAvoidingView>
+      </Modal>
     </View>
   );
 };

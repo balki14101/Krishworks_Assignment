@@ -8,15 +8,17 @@
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-
+import {Provider as PaperProvider} from 'react-native-paper';
 //Screen Component
-import MainScreen from './src/screens/MainScreen';
+import MainStack from './src/screens/MainStack';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <MainScreen />
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <MainStack />
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 
