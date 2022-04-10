@@ -12,7 +12,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Modal} from 'react-native-paper';
-// import {useNavigation} from '@react-navigation/native';
 
 //constants
 import {Height, Width} from '../constants/Dimension';
@@ -28,14 +27,17 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 const TabButton = [{Title: 'Home'}, {Title: 'About Us'}, {Title: 'Updates'}];
 const MainScreen = ({navigation}) => {
-  //   const navigation = useNavigation();
   const [buttonIndex, setButtonIndex] = useState(0);
   const [modalVisible, setModalVisible] = useState(0);
 
   //modal functions
   const showModal = () => setModalVisible(true);
   const hideModal = () => setModalVisible(false);
-  const containerStyle = {backgroundColor: 'white', marginHorizontal: 40};
+  const containerStyle = {
+    backgroundColor: Colors.WHITE,
+    marginHorizontal: Width / 5,
+    borderRadius: 4,
+  };
 
   return (
     <View style={styles.container}>
@@ -46,36 +48,36 @@ const MainScreen = ({navigation}) => {
           size={32}
           color={Colors.WHITE}
           onPress={() => {
-            // setModalVisible(true);
-            navigation.navigate('SettingStack');
+            setModalVisible(true);
+            // navigation.navigate('SettingStack');
           }}
         />
 
         {/**=================<Tab View>===============*/}
         <View style={styles.tabView}>
           {TabButton.map((item, index) => {
+            const tabBarButtonStyle = [
+              styles.TabBarButtonStyles,
+              {
+                backgroundColor:
+                  buttonIndex == index ? Colors.WHITE : Colors.BLUE,
+              },
+            ];
+            const tabBarButtonTextStyles = [
+              styles.TabBarButtonTextStyles,
+              {
+                color: buttonIndex == index ? Colors.BLUE : Colors.WHITE,
+              },
+            ];
+
             return (
               <TouchableOpacity
-                style={[
-                  styles.TabBarButtonStyles,
-                  {
-                    backgroundColor:
-                      buttonIndex == index ? Colors.WHITE : Colors.BLUE,
-                  },
-                ]}
+                style={tabBarButtonStyle}
                 key={String(index)}
                 onPress={() => {
                   setButtonIndex(index);
                 }}>
-                <Text
-                  style={[
-                    styles.TabBarButtonTextStyles,
-                    {
-                      color: buttonIndex == index ? Colors.BLUE : Colors.WHITE,
-                    },
-                  ]}>
-                  {item.Title}
-                </Text>
+                <Text style={tabBarButtonTextStyles}>{item.Title}</Text>
               </TouchableOpacity>
             );
           })}
@@ -93,15 +95,18 @@ const MainScreen = ({navigation}) => {
         <Webview uri={UpdatesPageUrl} />
       )}
       {/**=================</Web View>===============*/}
+
+      {/**=================<Passcode Popup>===============*/}
       <Modal
         visible={modalVisible}
         onDismiss={hideModal}
         contentContainerStyle={containerStyle}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <PassCodeModal />
+          <PassCodeModal navigation={navigation} />
         </KeyboardAvoidingView>
       </Modal>
+      {/**=================</Passcode popup>===============*/}
     </View>
   );
 };

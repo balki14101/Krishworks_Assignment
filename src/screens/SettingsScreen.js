@@ -9,6 +9,7 @@ import {ContactPageUrl, GalleryPageUrl} from '../constants/Url';
 //component
 import Webview from '../components/WebView';
 
+//ButtonData
 const DrawerButtonData = [{title: 'Gallery'}, {title: 'Contact Us'}];
 
 const SettingsScreen = ({navigation}) => {
@@ -17,13 +18,7 @@ const SettingsScreen = ({navigation}) => {
     <View style={{backgroundColor: Colors.WHITE}}>
       {/**=================<Header View>===============*/}
       <View style={styles.headerView}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: Width / 6.4,
-          }}>
+        <View style={styles.headerButtonView}>
           <TouchableOpacity style={{paddingLeft: 8}}>
             <Text
               style={styles.closeText}
@@ -38,7 +33,9 @@ const SettingsScreen = ({navigation}) => {
         </View>
       </View>
       {/**=================<Header View>===============*/}
-      <View style={{flexDirection: 'row'}}>
+
+      <View style={styles.row}>
+        {/**=================<Left Panel>===============*/}
         <View style={styles.drawerView}>
           {DrawerButtonData.map((item, index) => {
             return (
@@ -68,12 +65,15 @@ const SettingsScreen = ({navigation}) => {
             );
           })}
         </View>
+        {/**=================</Left Panel>===============*/}
 
+        {/**=================<WebView View>===============*/}
         {buttonindex == 0 ? (
           <Webview uri={GalleryPageUrl} />
         ) : (
           <Webview uri={ContactPageUrl} />
         )}
+        {/**=================</WebView View>===============*/}
       </View>
     </View>
   );
@@ -84,13 +84,17 @@ export default SettingsScreen;
 const styles = StyleSheet.create({
   headerView: {
     backgroundColor: Colors.PRIMARY,
-    // flexDirection: 'row',
     justifyContent: 'center',
-    // alignItems: 'center',
     paddingVertical: 4,
-    // paddingHorizontal: 8,
     height: 48,
   },
+  headerButtonView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: Width / 6.4,
+  },
+  row: {flexDirection: 'row'},
   closeText: {
     fontFamily: 'Poppins-Regular',
     fontSize: 16,
@@ -109,15 +113,11 @@ const styles = StyleSheet.create({
   },
   drawerButtonStyles: {
     padding: 8,
-    // backgroundColor: Colors.PRIMARY,
     borderBottomColor: Colors.PRIMARY,
     borderBottomWidth: 1,
-    // paddingHorizontal: 8,
   },
   drawerButtonTextStyles: {
     fontSize: 16,
     fontFamily: 'Poppins-Medium',
-
-    // marginLeft: 8,
   },
 });
