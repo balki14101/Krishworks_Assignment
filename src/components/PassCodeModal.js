@@ -1,33 +1,20 @@
-import {NavigationContainer} from '@react-navigation/native';
 import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  KeyboardAvoidingView,
-  Keyboard,
-  Platform,
+  TouchableOpacity,
 } from 'react-native';
 
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 //constant
 import Colors from '../constants/colors';
 //component
-import CodeValue from './CodeValue';
 import {isCodeCorrect} from '../helpers/codeHelper';
+import {Width} from '../constants/Dimension';
 
-const PassCodeModal = ({navigation}) => {
-  useEffect(() => {
-    // code1.current.focus();
-  }, []);
-  var correctValue = CodeValue();
-  var passcode = '';
-  var currentState = '';
-  var checkvalue1 = '080880';
-  var checkvalue2 = '589715';
-  console.log('correct value from another component ', correctValue);
-
+const PassCodeModal = ({navigation, setModalVisible}) => {
   //state
   const [number1, onChangeNumber1] = useState('');
   const [number2, onChangeNumber2] = useState('');
@@ -36,6 +23,12 @@ const PassCodeModal = ({navigation}) => {
   const [number5, onChangeNumber5] = useState('');
   const [number6, onChangeNumber6] = useState('');
   const [otpCode, setOtpCode] = useState('');
+
+  const otpBoxs = [...Array(6).fill('')];
+
+  // useEffect(() => {
+  //   code1.current.focus();
+  // }, []);
 
   // console.log(typeof number1);
   // let passcode = number1 + number2 + number3 + number4 + number5 + number6;
@@ -48,28 +41,13 @@ const PassCodeModal = ({navigation}) => {
   const code4 = useRef('');
   const code5 = useRef('');
   const code6 = useRef('');
-
-  const Inputs = [
-    {state: number1, setState: onChangeNumber1, ref: code1},
-    {state: number2, setState: onChangeNumber2, ref: code2},
-    {state: number3, setState: onChangeNumber3, ref: code3},
-    {state: number4, setState: onChangeNumber4, ref: code4},
-    {state: number5, setState: onChangeNumber5, ref: code5},
-    {state: number6, setState: onChangeNumber6, ref: code6},
-  ];
-
   return (
-    // <KeyboardAvoidingView
-    //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    //   keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 64}
-    //   style={styles.modalContainer}>
     <View style={styles.modalContainer}>
-      {/* <View style={styles.modalContainer}> */}
       <Text style={styles.passCodeTitle}>{'Developer Passcode'}</Text>
-      <OTPInputView
-        style={{height: 50}}
+      {/* <OTPInputView
+        style={styles.passCodeInput}
         pinCount={6}
-        code={otpCode} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
+        code={otpCode}
         onCodeChanged={code => {
           setOtpCode(code);
         }}
@@ -79,13 +57,23 @@ const PassCodeModal = ({navigation}) => {
         onCodeFilled={code => {
           if (isCodeCorrect(code)) {
             navigation.navigate('SettingStack');
+            setModalVisible(false);
           } else {
             alert('incorrect value');
           }
         }}
-      />
-      {/* <View style={styles.textInputView}>
-        <TextInput
+      /> */}
+      <View style={styles.textInputView}>
+        {otpBoxs.map((item, index) => {
+          const displayText = otpCode[index] || '';
+          return (
+            <TouchableOpacity key={String(index)} style={styles.input}>
+              <Text>{displayText}</Text>
+            </TouchableOpacity>
+          );
+        })}
+
+        {/* <TextInput
           ref={code1}
           style={styles.input}
           onChangeText={text => {
@@ -150,87 +138,45 @@ const PassCodeModal = ({navigation}) => {
           value={number6}
           keyboardType="number-pad"
           maxLength={1}
-        />
-      </View> */}
-
-      {/*<View style={styles.textInputView}>
-        {Inputs.map((item, index) => {
-          return (
-            <TextInput
-              onKeyPress={
-                index > 0 &&
-                (({nativeEvent}) => {
-                  if (nativeEvent.key === 'Backspace') {
-                    // const input = item.ref.current[index - 1];
-                    console.log(
-                      'backspace cheacking',
-                      item.ref.current[index - 1],
-                    );
-                    // input.focus();
-                  }
-                })
-              }
-              ref={item.ref}
-              key={String(index)}
-              style={styles.input}
-              onChangeText={() => {
-                item.setState;
-                if (!item.state) {
-                  passcode = passcode + item.state;
-                  console.log(passcode);
-                  if (index != 5) Inputs[index + 1].ref.current.focus();
-                  if (index == 5 && item.state != null && item.state != '') {
-                    item.ref.current.focus();
-                  }
-                }
-              }}
-              value={item.state}
-              keyboardType="number-pad"
-              maxLength={1}
-            />
-          );
-        })}
+        /> */}
       </View>
-      */}
-
-      {/* </View> */}
     </View>
-    // </KeyboardAvoidingView>
   );
 };
 
 export default PassCodeModal;
 
 const styles = StyleSheet.create({
-  borderStyleBase: {
-    width: 30,
-    height: 45,
-  },
-
-  borderStyleHighLighted: {
-    borderColor: 'lightgrey',
-  },
-
   underlineStyleBase: {
     height: 56,
     width: 44,
     borderWidth: 1,
+    borderColor: Colors.LIGHT_GREY,
     borderRadius: 8,
     color: Colors.BLACK,
   },
+  passCodeInput: {height: 50, marginVertical: 8},
 
   underlineStyleHighLighted: {
-    borderColor: 'lightgrey',
+    borderColor: Colors.LIGHT_GREY,
   },
   modalContainer: {
     paddingHorizontal: 24,
     paddingVertical: 16,
+    backgroundColor: Colors.WHITE,
+    borderRadius: 4,
+    marginHorizontal: Width / 5,
   },
   passCodeTitle: {
     color: Colors.PRIMARY,
     fontSize: 18,
     fontFamily: 'Poppins-Medium',
     alignSelf: 'center',
+  },
+  textInputView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   input: {
     color: Colors.PRIMARY,
@@ -244,32 +190,5 @@ const styles = StyleSheet.create({
     borderColor: 'lightgrey',
     padding: 10,
     borderRadius: 8,
-  },
-  container: {
-    // flex: 1,
-  },
-  inner: {
-    padding: 24,
-    flex: 1,
-    justifyContent: 'space-around',
-  },
-  header: {
-    fontSize: 36,
-    marginBottom: 48,
-  },
-  textInput: {
-    height: 40,
-    borderColor: '#000000',
-    borderBottomWidth: 1,
-    marginBottom: 36,
-  },
-  btnContainer: {
-    backgroundColor: 'white',
-    marginTop: 12,
-  },
-  textInputView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
 });
