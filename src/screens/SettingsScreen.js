@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 //constants
 import {Height, Width} from '../constants/Dimension';
-import Colors from '../constants/colors';
+import Colors from '../constants/Colors';
 import {ContactPageUrl, GalleryPageUrl} from '../constants/Url';
 
 //component
@@ -13,7 +13,24 @@ import Webview from '../components/WebView';
 const DrawerButtonData = [{title: 'Gallery'}, {title: 'Contact Us'}];
 
 const SettingsScreen = ({navigation}) => {
+  //state
   const [buttonindex, setButtonIndexndex] = useState(0);
+
+  //Button styles
+  const buttonBackGorundStyles = index => [
+    styles.drawerButtonStyles,
+    {
+      backgroundColor: buttonindex == index ? Colors.PRIMARY : Colors.WHITE,
+    },
+  ];
+
+  const buttonTextStyles = index => [
+    styles.drawerButtonTextStyles,
+    {
+      color: buttonindex == index ? Colors.Yellow : Colors.PRIMARY,
+    },
+  ];
+
   return (
     <View style={{backgroundColor: Colors.WHITE}}>
       {/**=================<Header View>===============*/}
@@ -41,26 +58,11 @@ const SettingsScreen = ({navigation}) => {
             return (
               <TouchableOpacity
                 key={String(index)}
-                style={[
-                  styles.drawerButtonStyles,
-                  {
-                    backgroundColor:
-                      buttonindex == index ? Colors.PRIMARY : Colors.WHITE,
-                  },
-                ]}
+                style={buttonBackGorundStyles(index)}
                 onPress={() => {
                   setButtonIndexndex(index);
                 }}>
-                <Text
-                  style={[
-                    styles.drawerButtonTextStyles,
-                    {
-                      color:
-                        buttonindex == index ? Colors.Yellow : Colors.PRIMARY,
-                    },
-                  ]}>
-                  {item.title}
-                </Text>
+                <Text style={buttonTextStyles(index)}>{item.title}</Text>
               </TouchableOpacity>
             );
           })}

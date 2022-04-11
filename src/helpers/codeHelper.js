@@ -5,21 +5,8 @@ export const isCodeCorrect = passCode => {
 
   let correctPassCode = currentDate * currentMonth * currentYear + '';
 
-  // const stringLength = correctPassCode.length;
-
-  // let extraString = '';
-  // for (let i = 0; i < 6 - stringLength; i++) {
-  //   extraString += '0';
-  // }
-
-  // if (stringLength < 6) {
-  //   correctPassCode = extraString + correctPassCode;
-  // }
-  // console.log({extraString});
-  // console.log({passCode, correctPassCode});
-
-  // const appendZeroes
   const appendZeroes = new Array(6 - correctPassCode.length).fill('0').join('');
   const finalPassCode = appendZeroes + correctPassCode;
+
   return passCode === finalPassCode;
 };

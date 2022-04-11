@@ -6,5 +6,6 @@ const COLORS = {
   Yellow: '#FFAD33',
   TRANSPARENT: '#00000000',
   LIGHT_GREY: '#D3D3D3',
+  DARK_THEME: '#121212',
 };
 export default COLORS;
