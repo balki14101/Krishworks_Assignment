@@ -2,7 +2,7 @@
 
 ### A react native android / ios application with custom-built modal component for OTP input with keyboard for login to the system to have Krishworks website shown in a webview component with App bar.
 
-### Download the APK from:  [Github link](https://github.com/balki14101/rn-redux-table/releases/tag/v1.0.0)
+### Download the APK from:  [Github link for APK](https://github.com/balki14101/Krishworks_Assignment/releases/tag/v1.0)
 
 [![GithubFollow @balki14101](https://img.shields.io/github/last-commit/balki14101/Krishworks_Assignment?)](https://github.com/balki14101/)[![GithubFollow @balki14101](https://img.shields.io/github/languages/count/balki14101/Krishworks_Assignment?color=orange)](https://github.com/balki14101/) [![GithubFollow @balki14101](https://img.shields.io/github/languages/top/balki14101/Krishworks_Assignment?color=blueviolet)](https://github.com/balki14101/) [![GithubFollow @balki14101](https://img.shields.io/github/languages/code-size/balki14101/Krishworks_Assignment?color=pink)](https://github.com/balki14101/) [![GithubFollow @balki14101](https://img.shields.io/github/repo-size/balki14101/Krishworks_Assignment)](https://github.com/balki14101/) [![GithubFollow @balki14101](https://img.shields.io/github/commit-activity/m/balki14101/Krishworks_Assignment?color=%23DB62B2%20)](https://github.com/balki14101/)
 
